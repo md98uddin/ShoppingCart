@@ -8,7 +8,13 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{
+        backgroundSize: "auto",
+        backgroundRepeat: "no-repeat"
+      }}
+    >
       <NavBar />
       <Router>
         <Route path="/" exact component={Products} />

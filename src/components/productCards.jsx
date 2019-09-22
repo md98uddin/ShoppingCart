@@ -8,23 +8,23 @@ const productCards = props => {
   return (
     <div
       style={{ margin: "5px" }}
-      className=" card-deck d-flex justify-content-center"
+      className=" card-deck d-flex justify-content-horizontal .col-md-4"
     >
       {props.products.map(product => (
         <div className="card" style={container} key={product.id}>
-          <img src={product.image} className="card-img-top" />
+          <img src={product.image} className="card-img-top" alt="" />
           <div className="product-card">
             <h5 style={{ margin: "5px" }} className="product-name">
               {product.name}
             </h5>
             <h4 className="product-price">{"Price: $" + product.price}</h4>
-            <a
+            <button
+              className="btn-md btn-primary"
               style={{ margin: "5px", color: "#FFFFFF" }}
               onClick={() => props.addProduct(product.id)}
-              className="btn btn-primary"
             >
               Add to Cart
-            </a>
+            </button>
           </div>
         </div>
       ))}

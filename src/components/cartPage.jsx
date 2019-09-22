@@ -2,19 +2,16 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
 const cartPage = props => {
-  const getQuantity = item => {
-    const items = props.itemsCart;
-    var quantity;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i].id == item.id) {
-        quantity++;
-      }
+  function cartTotal() {
+    const arr = props.itemsCart;
+    var total = 0;
+    for (var i = 0; i < arr.length; i++) {
+      total += arr[i].price;
     }
 
-    console.log(quantity);
-
-    return quantity;
-  };
+    return total;
+  }
+  var total = cartTotal();
   return (
     <>
       <Modal show={props.handleShow} onHide={props.handleClose}>
@@ -22,24 +19,44 @@ const cartPage = props => {
           <Modal.Title>Review Cart</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <tex>
+            {" "}
+            Your current total:{" "}
+            <span
+              style={{ marginBottom: "10px", width: "75px", height: "20px" }}
+              className="badge badge-pill badge-secondary"
+            >
+              {"$" + total}
+            </span>
+          </tex>
+
           <table className="table">
             <thead>
-              <th scope="col">Item</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Total</th>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+                <th scope="col">Remove</th>
+              </tr>
             </thead>
             <tbody>
               {props.itemsCart.map(item => (
-                <tr>
-                  <th>{item.name}</th>
-                  <th>{item.price}</th>
-                  <th>{getQuantity(item)}</th>
-                  <th>0</th>
+                <tr key={item.id}>
+                  <td>{item.name}</td>
+                  <td>{item.price}</td>
+                  <td>
+                    {" "}
+                    <button
+                      onClick={() => props.deleteProduct(item.id)}
+                      className="btn-danger btn-sm"
+                    >
+                      X
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <text>Make sure your order contains a bike before checking out</text>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>

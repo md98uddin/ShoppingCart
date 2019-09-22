@@ -12,7 +12,7 @@ class products extends Component {
   };
 
   render() {
-    const { products, itemsCart, show } = this.state;
+    const { products, itemsCart, show, cartTotal } = this.state;
     return (
       <div style={container}>
         <ProductCards products={products} addProduct={this.handleAddProduct} />
@@ -20,8 +20,8 @@ class products extends Component {
           handleShow={show}
           handleClose={this.handleClose}
           handleCheckout={this.handleCheckout}
-          cartTotal={this.cartTotal}
           itemsCart={itemsCart}
+          deleteProduct={this.handleDeleteProduct}
         />
         <button
           onClick={this.handleClose}
@@ -39,21 +39,14 @@ class products extends Component {
     const { products, itemsCart } = this.state;
 
     const itemsArr = [...itemsCart, products[id]];
-    console.log(products[id]);
     this.setState({
       itemsCart: itemsArr
     });
-
-    console.log(itemsCart);
   };
 
-  handleDeleteProduct = id => {
+  handleDeleteProduct = itemId => {
     const { itemsCart } = this.state;
-    console.log(itemsCart[id]);
-    const itemsArr = itemsCart.filter(item => {
-      return item !== item[id];
-    });
-
+    const itemsArr = itemsCart.filter(item => item.id !== itemId);
     this.setState({
       itemsCart: itemsArr
     });
@@ -64,11 +57,12 @@ class products extends Component {
     return itemsCart.length;
   }
 
-  cartTotal() {
+  cartTotal(arr) {
     const { itemsCart } = this.state;
     var total = 0;
-    for (var i = 0; i < itemsCart.length; i++) {
-      total += itemsCart[i].price;
+    arr = itemsCart;
+    for (var i = 0; i < arr.length; i++) {
+      total += arr[i].price;
     }
 
     return total.toFixed(2);
@@ -77,11 +71,15 @@ class products extends Component {
   handleClose = event => {
     const { show } = this.state;
     this.setState({ show: !show });
-    console.log(this.state.show);
   };
 
   handleCheckout = event => {
-    this.props.history.push("/checkOut");
+    const { itemsCart } = this.state;
+    for (var i = 0; i < itemsCart.length; i++) {
+      if (itemsCart[i].name.includes("Bike")) {
+        return this.props.history.push("/checkOut");
+      }
+    }
   };
 }
 
