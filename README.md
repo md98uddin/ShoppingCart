@@ -1,7 +1,7 @@
 # Instructions for running
 
 The application runs a small shopping cart simulation where users selected from small selection of items and check out
-via information/payment form. This was made using only reactjs library and bootstrap.
+via information form. This was made using only reactjs library and bootstrap.
 
 download/clone files
 
